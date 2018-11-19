@@ -1,0 +1,10 @@
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+<ShortName>Example Search</ShortName>
+<Description>Example description</Description>
+<InputEncoding>UTF-8</InputEncoding>
+<Image width="16" height="16" type="image/png">http://example.com/favicon.ico</Image>
+<Url rel="results" type="text/html" method="get" template="http://localhost:2020/search">
+  <Param name="q" value="{searchTerms}"/>
+</Url>
+<Url type="application/x-suggestions+json" template="http://localhost:2020/suggest?q={searchTerms}"/>
+</OpenSearchDescription>
