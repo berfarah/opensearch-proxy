@@ -4,26 +4,11 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 
 	proxy ".."
+	paper "../dropboxpaper"
 )
-
-type searcher struct{}
-
-func (searcher) Suggest(string) ([]string, error) {
-	return []string{
-		"sears",
-		"search engines",
-		"search engine",
-		"search",
-		"sears.com",
-		"seattle times",
-	}, nil
-}
-
-func (searcher) Search(string) (string, error) {
-	return "https://google.com", nil
-}
 
 func main() {
 	url, err := url.Parse("http://localhost:2020")
@@ -31,12 +16,12 @@ func main() {
 		panic(err)
 	}
 	searchProxy := proxy.New(proxy.Configuration{
-		Searcher: searcher{},
+		Searcher: paper.New(os.Getenv("TOKEN")),
 		Host:     url,
 		Metadata: proxy.Metadata{
-			Favicon:     "https://assets-cdn.github.com/favicon.ico",
-			Name:        "Example",
-			Description: "example search",
+			Favicon:     "https://paper.dropbox.com/favicon.ico?v3",
+			Name:        "Paper",
+			Description: "Search Paper",
 		},
 	})
 	log.Fatal(http.ListenAndServe(":2020", searchProxy))
